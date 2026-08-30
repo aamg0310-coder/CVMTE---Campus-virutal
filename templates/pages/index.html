@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<header class="header">
+
+    {% include 'componentes/navbar.html' %}
+
+    {% include 'componentes/hero.html' %}
+
+</header>
+
+<main class="main">
+
+    {% include 'componentes/cintillo.html' %}
+
+    {% include 'componentes/catalogo.html' %}
+
+    {% include 'componentes/card.html' %}
+
+    {% include 'componentes/about.html' %}
+
+</main>
+
+
+{% include 'componentes/footer.html' %}
+
+
+{% endblock %}

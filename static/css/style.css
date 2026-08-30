@@ -1,0 +1,20 @@
+@import url(global/variables.css);
+@import url(global/reset.css);
+
+
+
+@import url(componentes/navbar.css);
+@import url(componentes/hero.css);
+@import url(componentes/cintillo.css);
+@import url(componentes/catalogo.css);
+@import url(componentes/card_catalogo.css);
+@import url(componentes/tarjeta.css);
+@import url(componentes/about.css);
+@import url(componentes/footer.css);
+@import url(componentes/search.css);
+@import url(componentes/formacion.css);
+@import url(componentes/filter.css);
+@import url(componentes/detalle.css);
+@import url(componentes/auth.css);
+
+

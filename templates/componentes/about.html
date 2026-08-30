@@ -1,0 +1,38 @@
+{% load static %}
+
+{% block content %}
+
+<section class="about">
+    <header class="about_header">
+        <h2>
+            Un modelo diseñado para el territorio
+        </h2>
+        <p>
+            No una plantilla genérica: currículo construido sobre la economía real de la Región Centro Occidental y el
+            sector petrolero nacional.
+        </p>
+    </header>
+
+    <footer class="about_footer">
+
+        <div class="grid">
+
+            {% for x in cards %}
+
+            <div class="card_about">
+
+                <h4 class="titulo_card_about">{{x.titulo}}</h4>
+
+                <p class="parrafo_card_about">{{x.descripcion}}</p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </footer>
+
+</section>
+
+{% endblock %}

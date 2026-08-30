@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<header class="header">
+    {% include 'componentes/navbar.html' %}
+
+    {% include 'componentes/search.html' %}
+
+</header>
+
+<main class="main">
+
+    {% include 'componentes/filter.html' %}
+
+    <section class="grid" id="grid-rutas">
+        {% for x in rutas %}
+            {% include 'componentes/_card_ruta.html' with ruta=x %}
+        {% empty %}
+        <p>Sin rutas</p>
+        {% endfor %}
+        <p id="no-results" style="display:none;">Sin resultados para tu búsqueda.</p>
+    </section>
+    {% if rutas.has_other_pages %}
+    <nav class="pagination" aria-label="Paginación">
+        {% if rutas.has_previous %}<a href="?page={{ rutas.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if categoria %}&categoria={{ categoria }}{% endif %}">Anterior</a>{% endif %}
+        <span>Página {{ rutas.number }} de {{ rutas.paginator.num_pages }}</span>
+        {% if rutas.has_next %}<a href="?page={{ rutas.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if categoria %}&categoria={{ categoria }}{% endif %}">Siguiente</a>{% endif %}
+    </nav>
+    {% endif %}
+
+    <section class="formacion_petrolera" id="formacion-petrolera">
+
+        <h2>
+            Catálogo Técnico de Formación Petrolera Venezolana
+        </h2>
+
+        <p>
+            15 programas · 6 semanas / 180h c/u · Semipresencial AI-First · Open Badges 3.0 · Prerrequisito común: Ruta
+            0 IA Transversal
+        </p>
+
+        <div class="secciones">
+
+            {% for x in secciones %}
+
+            <h4 class="titulo_seccion">{{ x.titulo }}</h4>
+
+            <div class="grid">
+
+                {% for card in x.cards.all %}
+
+                <article class="card_cd">
+                    {% if card.img %}
+                    <img src="{{ card.img.url }}" alt="{{ card.titulo }}" loading="lazy" class="card_cd__img">
+                    {% else %}
+                    <div class="card_cd__img card_cd__img--placeholder" aria-hidden="true"><span>🛢️</span></div>
+                    {% endif %}
+                    <small>{{ card.seccion.titulo }} · #{{ card.id }}</small>
+                    <h4><a href="{% url 'main:detalle_petrolera_slug' card.slug %}" style="color:#111;">{{card.titulo}}</a></h4>
+                    <p>{{card.nivel}} · {{ card.duracion_horas }}h</p>
+                    <a href="{% url 'main:detalle_petrolera_slug' card.slug %}" class="ver">Ver curso →</a>
+                </article>
+
+                {% empty %}
+                <p>sin cd</p>
+                {% endfor %}
+
+            </div>
+
+            {% empty %}
+            <p>sin secciones</p>
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+
+{% include 'componentes/footer.html' %}
+
+{% endblock %}

@@ -1,0 +1,74 @@
+.card_catalogo {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    min-height: 420px;
+    width: 100%;
+    max-width: 380px;
+    border-radius: var(--radius-card);
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card_catalogo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+.card_catalogo header {
+    background: var(--grad-card);
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.card_catalogo header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.categoria_card {
+    background-color: #222;
+    padding: 4px 10px;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.75rem;
+}
+
+.content_card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 4px;
+    flex: 1;
+}
+
+.titulo_card { font-size: 1.05rem; line-height: 1.3; }
+.parrafo_card { color: #555; font-size: 0.9rem; flex: 1; }
+
+.footer_card {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 6px;
+    border-top: 1px solid #eee;
+}
+
+.puntuacion { display: flex; align-items: center; gap: 4px; }
+.puntuacion svg { color: #b8860b; }
+.ver a { color: #4f46e5 !important; font-weight: 600; }
+.ver { display: flex; align-items: center; gap: 4px; }
+
+@media (max-width: 600px) {
+    .card_catalogo { max-width: 100%; min-height: 380px; }
+}
+

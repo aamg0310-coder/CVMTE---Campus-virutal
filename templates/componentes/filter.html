@@ -1,0 +1,20 @@
+{% load static %}
+
+{% block content %}
+
+<section class="filters" role="group" aria-label="Filtros de categoría">
+
+    <a href="#" class="filter-select filter" data-filter="todas" aria-pressed="true">
+        Todas
+    </a>
+
+    {% for cat in categorias %}
+    <a href="#" class="filter" data-filter="{{ cat.slug }}" aria-pressed="false">{{ cat.nombre }}</a>
+    {% endfor %}
+
+    {# Filtro especial petrolera (no es Categoria de Ruta, muestra sección Oil & Gas) #}
+    <a href="#" class="filter" data-filter="ruta-petrolera" aria-pressed="false">Ruta Petrolera</a>
+
+</section>
+
+{% endblock %}

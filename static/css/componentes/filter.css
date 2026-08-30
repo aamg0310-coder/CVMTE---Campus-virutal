@@ -1,0 +1,32 @@
+.filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 2vh 10vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter {
+    padding: 6px 14px;
+    border-radius: 15px;
+    color: #a1a1a1;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.filter:hover {
+    background-color: #000000;
+    color: #fff;
+}
+
+/* Estado seleccionado - reutiliza estilo navbar.css .item_seleccionado */
+.filter-select {
+    color: #fff;
+    background-color: #000000;
+    border-color: #000000;
+}

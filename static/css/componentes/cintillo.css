@@ -1,0 +1,17 @@
+.cintillo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    background: #c7c7c7;
+    gap: 20px;
+    width: 100%;
+}
+
+.cintillo h5 {
+    background: linear-gradient(to left, #ca0198, #8a01ca, #0191ca);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ ruta.titulo }} — CVMTE{% endblock %}
+{% block meta_description %}{{ ruta.descripcion_corta|default:ruta.descripcion|truncatechars:160 }}{% endblock %}
+{% block content %}
+<header class="header">
+    {% include 'componentes/navbar.html' %}
+</header>
+
+<main class="curso-detalle">
+    <!-- Hero curso -->
+    <section class="curso-hero">
+        <div class="curso-hero__content">
+            <a href="{% url 'main:catalogo' %}" class="curso-back">← Volver al catálogo</a>
+            <div class="curso-badges">
+                <span class="categoria_card">{{ ruta.categoria }}</span>
+                <span class="nivel">{{ ruta.nivel }}</span>
+                {% if ruta.destacada %}<span class="badge-destacada">Destacada</span>{% endif %}
+            </div>
+            <h1 class="curso-titulo">{{ ruta.titulo }}</h1>
+            <p class="curso-descripcion">{{ ruta.descripcion }}</p>
+            <div class="curso-meta">
+                <span>⭐ {{ ruta.puntuacion }}/5</span>
+                <span>⏱ {{ ruta.duracion_horas }}h · {{ ruta.duracion_semanas }} semanas</span>
+                <span>🎓 {{ ruta.modalidad }}</span>
+                <span>👨‍🏫 {{ ruta.instructor }}</span>
+            </div>
+            <div class="curso-cta">
+                <a href="#inscripcion" class="btn btn-1">Inscribirme — Open Badges 3.0</a>
+                <a href="{% url 'main:catalogo' %}#formacion-petrolera" class="btn btn-panel">Ver Ruta Petrolera</a>
+            </div>
+        </div>
+        <div class="curso-hero__media">
+            {% if ruta.img %}
+            <img src="{{ ruta.img.url }}" alt="{{ ruta.titulo }}" loading="lazy" class="curso-img">
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Video + Ficha -->
+    <section class="curso-main">
+        <div class="curso-video">
+            <h2>Presentación del curso</h2>
+            {% if ruta.video_file %}
+            <video controls poster="{% if ruta.img %}{{ ruta.img.url }}{% endif %}" class="video-native" preload="metadata">
+                <source src="{{ ruta.video_file.url }}" type="video/mp4">
+                Tu navegador no soporta video HTML5.
+            </video>
+            <p class="video-filename"><small>Archivo: {{ ruta.video_filename }}</small></p>
+            {% else %}
+            <div class="video-placeholder">
+                <p>🎬 Video próximamente</p>
+                <small>El administrador aún no ha subido el video de este curso. Se mostrará aquí cuando esté disponible.</small>
+            </div>
+            {% endif %}
+        </div>
+
+        <aside class="curso-ficha" id="inscripcion">
+            <h3>Ficha del curso</h3>
+            <ul class="ficha-list">
+                <li><strong>Nivel:</strong> {{ ruta.nivel }}</li>
+                <li><strong>Categoría:</strong> {{ ruta.categoria }}</li>
+                <li><strong>Duración:</strong> {{ ruta.duracion_horas }}h / {{ ruta.duracion_semanas }} semanas</li>
+                <li><strong>Modalidad:</strong> {{ ruta.modalidad }}</li>
+                <li><strong>Instructor:</strong> {{ ruta.instructor }}</li>
+                <li><strong>Cupos:</strong> {{ ruta.cupos }}</li>
+                <li><strong>Incluye:</strong> {{ ruta.incluye }}</li>
+                <li><strong>Puntuación:</strong> ⭐ {{ ruta.puntuacion }}/5</li>
+            </ul>
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'main:toggle_ruta' ruta.slug %}" style="margin-top:12px;">
+                {% csrf_token %}
+                <button type="submit" class="btn {% if progreso and progreso.completado %}btn-panel{% else %}btn-1{% endif %}" style="width:100%; justify-content:center; border:none; cursor:pointer;">
+                    {% if progreso and progreso.completado %}✓ Completado — Desmarcar{% else %}✓ Marcar como visto{% endif %}
+                </button>
+            </form>
+            {% if progreso %}<small style="color:{% if progreso.completado %}#16a34a{% else %}#888{% endif %};">Estado: {{ progreso.get_estado_display }} · {{ progreso.actualizado_en|date:"d/m/Y" }}</small>
+            {% else %}<small style="color:#888;">Aún no iniciado. Haz click para registrar progreso.</small>{% endif %}
+            {% else %}
+            <a href="{% url 'main:login' %}?next={{ request.path }}" class="btn btn-1" style="width:100%; justify-content:center;">Inicia sesión para guardar progreso</a>
+            {% endif %}
+            <small style="color:#888;">Credencial verificable Open Badges 3.0 al completar</small>
+        </aside>
+    </section>
+
+    <!-- Contenido pedagógico -->
+    <section class="curso-contenido">
+        <div class="curso-bloque">
+            <h3>🎯 Objetivos</h3>
+            {% if ruta.get_objetivos_list %}
+            <ul>{% for o in ruta.get_objetivos_list %}<li>{{ o }}</li>{% endfor %}</ul>
+            {% else %}<p class="muted">Define los objetivos en el admin (uno por línea).</p>{% endif %}
+        </div>
+        <div class="curso-bloque">
+            <h3>🧩 Competencias</h3>
+            {% if ruta.get_competencias_list %}
+            <ul>{% for c in ruta.get_competencias_list %}<li>{{ c }}</li>{% endfor %}</ul>
+            {% else %}<p class="muted">Añade competencias (una por línea) para mostrarlas aquí.</p>{% endif %}
+        </div>
+        <div class="curso-bloque">
+            <h3>📋 Requisitos</h3>
+            {% if ruta.requisitos %}<p style="white-space:pre-line;">{{ ruta.requisitos }}</p>{% else %}<p class="muted">Ruta 0 IA Transversal como prerrequisito común.</p>{% endif %}
+        </div>
+    </section>
+
+    {% if relacionadas %}
+    <section class="curso-relacionadas">
+        <h2>Rutas relacionadas</h2>
+        <div class="grid">
+            {% for r in relacionadas %}{% include 'componentes/_card_ruta.html' with ruta=r %}{% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</main>
+
+{% include 'componentes/footer.html' %}
+{% endblock %}

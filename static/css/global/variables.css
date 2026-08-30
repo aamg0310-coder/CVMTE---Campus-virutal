@@ -1,0 +1,13 @@
+:root {
+  --grad-ia: linear-gradient(to left, #ca0198, #8a01ca, #0191ca);
+  --grad-card: linear-gradient(to left, #d400ff, #9900ff, #00c3ff);
+  --grad-search: linear-gradient(to left, #0f0438, #0c153b, #0a3a1e);
+  --grad-tarjeta: linear-gradient(to left, #550051, #3a0055, #003655);
+  --bg-dark: #05071b;
+  --bg-navbar: rgba(17, 17, 17, 0.85);
+  --text-muted: #b8b8b8;
+  --text-dim: #a1a1a1;
+  --radius-card: 15px;
+  --radius-pill: 20px;
+  --shadow-card: 0 8px 24px rgba(0,0,0,0.18);
+}

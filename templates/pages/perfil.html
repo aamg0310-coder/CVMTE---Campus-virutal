@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mi perfil — CVMTE{% endblock %}
+{% block content %}
+<header class="header">{% include 'componentes/navbar.html' %}</header>
+<main class="perfil-main">
+    <section class="perfil-hero">
+        <h1>👤 {{ user.username }}</h1>
+        <p class="muted">{{ user.email }} · Miembro desde {{ user.date_joined|date:"d/m/Y" }}</p>
+        <div class="perfil-stats">
+            <div class="stat"><span>{{ completados.count }}</span><small>Completados</small></div>
+            <div class="stat"><span>{{ en_progreso.count }}</span><small>En progreso</small></div>
+            <div class="stat"><span>{{ progresos.count }}/{{ total_cursos }}</span><small>Total vistos</small></div>
+            <div class="stat"><span>{% if total_cursos %}{{ completados.count|floatformat:0 }}/{{ total_cursos }} {% widthratio completados.count total_cursos 100 %}%{% else %}0%{% endif %}</span><small>Avance</small></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:{% widthratio completados.count total_cursos 100 %}%"></div></div>
+    </section>
+
+    {% if messages %}{% for m in messages %}<div class="alert alert-{{ m.tags }}" style="margin:12px auto; max-width:1100px;">{{ m }}</div>{% endfor %}{% endif %}
+
+    <section class="perfil-section">
+        <h2>✓ Completados ({{ completados.count }})</h2>
+        {% if completados %}
+        <div class="grid">
+            {% for p in completados %}
+            <article class="card_cd">
+                {% if p.ruta and p.ruta.img %}<img src="{{ p.ruta.img.url }}" class="card_cd__img">{% elif p.programa and p.programa.img %}<img src="{{ p.programa.img.url }}" class="card_cd__img">{% else %}<div class="card_cd__img card_cd__img--placeholder"><span>{% if p.ruta %}🎓{% else %}🛢️{% endif %}</span></div>{% endif %}
+                <small>{% if p.ruta %}{{ p.ruta.categoria }}{% else %}{{ p.programa.seccion.titulo }}{% endif %} · completado {{ p.completado_en|date:"d/m/Y" }}</small>
+                <h4>
+                    {% if p.ruta %}<a href="{% url 'main:detalle_ruta_slug' p.ruta.slug %}" style="color:#111;">{{ p.curso_titulo }}</a>
+                    {% else %}<a href="{% url 'main:detalle_petrolera_slug' p.programa.slug %}" style="color:#111;">{{ p.curso_titulo }}</a>{% endif %}
+                </h4>
+                <span style="color:#16a34a; font-size:0.85rem;">● Completado</span>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}<p class="muted">Aún no has completado cursos. Marca un curso como visto desde su detalle.</p>{% endif %}
+    </section>
+
+    <section class="perfil-section">
+        <h2>▶ En progreso ({{ en_progreso.count }})</h2>
+        {% if en_progreso %}
+        <div class="grid">
+            {% for p in en_progreso %}
+            <article class="card_cd">
+                {% if p.ruta and p.ruta.img %}<img src="{{ p.ruta.img.url }}" class="card_cd__img">{% elif p.programa and p.programa.img %}<img src="{{ p.programa.img.url }}" class="card_cd__img">{% else %}<div class="card_cd__img card_cd__img--placeholder"><span>{% if p.ruta %}🎓{% else %}🛢️{% endif %}</span></div>{% endif %}
+                <small>{% if p.ruta %}{{ p.ruta.categoria }}{% else %}{{ p.programa.seccion.titulo }}{% endif %} · iniciado {{ p.iniciado_en|date:"d/m/Y" }}</small>
+                <h4>
+                    {% if p.ruta %}<a href="{% url 'main:detalle_ruta_slug' p.ruta.slug %}" style="color:#111;">{{ p.curso_titulo }}</a>
+                    {% else %}<a href="{% url 'main:detalle_petrolera_slug' p.programa.slug %}" style="color:#111;">{{ p.curso_titulo }}</a>{% endif %}
+                </h4>
+                <span style="color:#f59e0b; font-size:0.85rem;">● En progreso</span>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}<p class="muted">No hay cursos en progreso.</p>{% endif %}
+    </section>
+
+    <section class="perfil-section">
+        <h2>Todos mis cursos ({{ progresos.count }})</h2>
+        {% if progresos %}
+        <table class="perfil-table">
+            <thead><tr><th>Curso</th><th>Tipo</th><th>Estado</th><th>Actualizado</th><th></th></tr></thead>
+            <tbody>
+            {% for p in progresos %}
+            <tr>
+                <td>{{ p.curso_titulo }}</td>
+                <td><small>{{ p.curso_tipo }}</small></td>
+                <td>{% if p.completado %}<span class="badge-ok">Completado</span>{% else %}<span class="badge-wip">En progreso</span>{% endif %}</td>
+                <td><small>{{ p.actualizado_en|date:"d/m H:i" }}</small></td>
+                <td>
+                    {% if p.ruta %}<a href="{% url 'main:detalle_ruta_slug' p.ruta.slug %}">Ver</a>
+                    {% else %}<a href="{% url 'main:detalle_petrolera_slug' p.programa.slug %}">Ver</a>{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}<p class="muted">Explora el <a href="{% url 'main:catalogo' %}">catálogo</a> y marca tu primer curso como visto.</p>{% endif %}
+    </section>
+</main>
+{% include 'componentes/footer.html' %}
+{% endblock %}

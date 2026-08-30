@@ -1,0 +1,26 @@
+{% load static %}
+
+{% block content %}
+
+<section class="search_content">
+
+    <div>
+        <h2>
+            Catálogo de rutas y programas
+        </h2>
+        <p>
+            10 rutas por competencias · Nivel I (Técnico Operativo) y Nivel II (Técnico Avanzado) · 180 horas por nivel
+        </p>
+    </div>
+
+    <form role="search" id="search-form">
+        <input type="text" placeholder="Buscar ruta, competencias o sector" class="search" id="search-input" name="q" autocomplete="off" aria-label="Buscar ruta por titulo">
+        <button type="submit" class="submit btn-2">
+            Buscar
+        </button>
+    </form>
+    <p id="search-feedback" aria-live="polite" style="color:#fff; margin-top:8px; min-height:1em;"></p>
+
+</section>
+
+{% endblock %}

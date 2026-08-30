@@ -1,0 +1,28 @@
+{% load static %}
+
+{% block content %}
+
+<section class="indx_catalogo">
+
+    <div class="content_indx_catalogo">
+
+        <h2>
+            Diez rutas, un mismo eje: la IA como <br> infraestructura
+        </h2>
+        <p>
+            Todas comparten el Módulo Base y la Ruta 0 de IA Aplicada, y suman la Ruta 10 de Formación Petrolera con sus
+            15 programas técnicos para la reactivación del sector Oil & Gas venezolano.
+        </p>
+    </div>
+
+    <div class="grid">
+        {% for x in rutas %}
+            {% include 'componentes/_card_ruta.html' with ruta=x %}
+        {% empty %}
+            <p>Pronto más rutas por competencias.</p>
+        {% endfor %}
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ programa.titulo }} — Formación Petrolera CVMTE{% endblock %}
+{% block meta_description %}{{ programa.descripcion_corta|default:programa.descripcion|truncatechars:160 }}{% endblock %}
+{% block content %}
+<header class="header">
+    {% include 'componentes/navbar.html' %}
+</header>
+
+<main class="curso-detalle petrolera">
+    <section class="curso-hero" style="background: var(--grad-tarjeta);">
+        <div class="curso-hero__content">
+            <a href="{% url 'main:catalogo' %}#formacion-petrolera" class="curso-back" style="color:#fff;">← Volver a Formación Petrolera</a>
+            <div class="curso-badges">
+                <span class="categoria_card">{{ programa.seccion.titulo }}</span>
+                <span class="nivel">{{ programa.nivel }}</span>
+                <span class="categoria_card" style="background:#000;">Oil & Gas</span>
+            </div>
+            <h1 class="curso-titulo">{{ programa.titulo }}</h1>
+            <p class="curso-descripcion">{% if programa.descripcion %}{{ programa.descripcion }}{% else %}Programa técnico de la cadena de valor Oil & Gas — del operador de producción a la analítica con IA. Diseñado para reconstruir el talento técnico petrolero venezolano.{% endif %}</p>
+            <div class="curso-meta">
+                <span>⭐ {{ programa.puntuacion }}/5</span>
+                <span>⏱ {{ programa.duracion_horas }}h · {{ programa.duracion_semanas }} semanas</span>
+                <span>🎓 {{ programa.modalidad }}</span>
+                <span>👨‍🏫 {{ programa.instructor }}</span>
+            </div>
+            <div class="curso-cta">
+                <a href="#inscripcion" class="btn btn-1">Inscribirme — Ruta 0 requerida</a>
+                <a href="{% url 'main:catalogo' %}" class="btn btn-panel">Ver todas las rutas</a>
+            </div>
+        </div>
+        <div class="curso-hero__media">
+            {% if programa.img %}
+            <img src="{{ programa.img.url }}" alt="{{ programa.titulo }}" loading="lazy" class="curso-img">
+            {% else %}
+            <div class="petrolera-badge">
+                <small>Programa #{{ programa.id }}</small>
+                <h4>{{ programa.seccion.titulo }}</h4>
+                <p>15 programas · 6 capas Oil & Gas</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="curso-main">
+        <div class="curso-video">
+            <h2>Video del programa</h2>
+            {% if programa.video_file %}
+            <video controls class="video-native" preload="metadata">
+                <source src="{{ programa.video_file.url }}" type="video/mp4">
+                Tu navegador no soporta video HTML5.
+            </video>
+            <p class="video-filename"><small>Archivo: {{ programa.video_filename }}</small></p>
+            {% else %}
+            <div class="video-placeholder">
+                <p>🎬 Video del programa próximamente</p>
+                <small>El administrador aún no ha subido el video de este programa. Se mostrará aquí cuando esté disponible.</small>
+            </div>
+            {% endif %}
+        </div>
+
+        <aside class="curso-ficha" id="inscripcion">
+            <h3>Ficha del programa</h3>
+            <ul class="ficha-list">
+                <li><strong>Sección:</strong> {{ programa.seccion.titulo }}</li>
+                <li><strong>Nivel:</strong> {{ programa.nivel }}</li>
+                <li><strong>Duración:</strong> {{ programa.duracion_horas }}h / {{ programa.duracion_semanas }} s.</li>
+                <li><strong>Modalidad:</strong> {{ programa.modalidad }}</li>
+                <li><strong>Instructor:</strong> {{ programa.instructor }}</li>
+                <li><strong>Incluye:</strong> {{ programa.incluye }}</li>
+            </ul>
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'main:toggle_petrolera' programa.slug %}" style="margin-top:12px;">
+                {% csrf_token %}
+                <button type="submit" class="btn {% if progreso and progreso.completado %}btn-panel{% else %}btn-1{% endif %}" style="width:100%; justify-content:center; border:none; cursor:pointer;">
+                    {% if progreso and progreso.completado %}✓ Completado — Desmarcar{% else %}✓ Marcar como visto{% endif %}
+                </button>
+            </form>
+            {% if progreso %}<small style="color:{% if progreso.completado %}#16a34a{% else %}#888{% endif %};">Estado: {{ progreso.get_estado_display }} · {{ progreso.actualizado_en|date:"d/m/Y" }}</small>{% endif %}
+            {% else %}
+            <a href="{% url 'main:login' %}?next={{ request.path }}" class="btn btn-1" style="width:100%; justify-content:center;">Inicia sesión para guardar progreso</a>
+            {% endif %}
+            <small style="color:#888;">Prerrequisito: Ruta 0 IA Transversal</small>
+        </aside>
+    </section>
+
+    <section class="curso-contenido">
+        <div class="curso-bloque">
+            <h3>🎯 Objetivos</h3>
+            {% if programa.get_objetivos_list %}
+            <ul>{% for o in programa.get_objetivos_list %}<li>{{ o }}</li>{% endfor %}</ul>
+            {% else %}<p class="muted">Operar con seguridad, aplicar analítica con IA y cumplir estándares PDVSA/Chevron/Repsol.</p>{% endif %}
+        </div>
+        <div class="curso-bloque">
+            <h3>🧩 Competencias</h3>
+            {% if programa.get_competencias_list %}
+            <ul>{% for c in programa.get_competencias_list %}<li>{{ c }}</li>{% endfor %}</ul>
+            {% else %}<p class="muted">Añade competencias en el admin.</p>{% endif %}
+        </div>
+        <div class="curso-bloque">
+            <h3>📋 Requisitos</h3>
+            {% if programa.requisitos %}<p style="white-space:pre-line;">{{ programa.requisitos }}</p>{% else %}<p class="muted">Ruta 0 IA Transversal aprobada.</p>{% endif %}
+        </div>
+    </section>
+
+    {% if relacionadas %}
+    <section class="curso-relacionadas">
+        <h2>Más de {{ programa.seccion.titulo }}</h2>
+        <div class="grid">
+            {% for p in relacionadas %}
+            <article class="card_cd">
+                {% if p.img %}<img src="{{ p.img.url }}" alt="{{ p.titulo }}" loading="lazy" class="card_cd__img">{% else %}<div class="card_cd__img card_cd__img--placeholder"><span>🛢️</span></div>{% endif %}
+                <small>{{ p.seccion.titulo }}</small>
+                <h4><a href="{% url 'main:detalle_petrolera_slug' p.slug %}" style="color:#111;">{{ p.titulo }}</a></h4>
+                <p>{{ p.nivel }} · {{ p.duracion_horas }}h</p>
+                <a href="{% url 'main:detalle_petrolera_slug' p.slug %}" class="ver" style="margin-top:8px;">Ver →</a>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</main>
+
+{% include 'componentes/footer.html' %}
+{% endblock %}

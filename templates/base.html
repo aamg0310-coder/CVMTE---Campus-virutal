@@ -1,0 +1,29 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}Campus Virtual de Música y Tecnologías Emergentes — 10 rutas por competencias, IA como infraestructura pedagógica, Open Badges 3.0. Sedes Carora y Barquisimeto.{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}CVMTE — Campus Virtual de Música y Tecnologías Emergentes{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}10 rutas, 24 programas, credenciales verificables. IA como infraestructura pedagógica.{% endblock %}">
+    <title>{% block title %}CVMTE — Campus Virtual{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% block extra_js %}
+    <script src="{% static 'js/catalogo.js' %}" defer></script>
+    {% endblock %}
+
+</body>
+
+</html>

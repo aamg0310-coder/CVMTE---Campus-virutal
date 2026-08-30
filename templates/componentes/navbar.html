@@ -1,0 +1,39 @@
+{% load static %}
+
+<nav class="navbar">
+
+    <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-code"
+            viewBox="0 0 16 16">
+            <path
+                d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8z" />
+        </svg>
+        <div>
+            <a href="{% url 'main:inicio' %}">CVMTE</a>
+            <small>Música y Tecnología</small>
+        </div>
+    </div>
+
+    <ul class="list_navbar">
+        <li class="item_list {% if request.resolver_match.url_name == 'inicio' %}item_seleccionado{% endif %}">
+            <a href="{% url 'main:inicio' %}">Inicio</a>
+        </li>
+        <li class="item_list {% if request.resolver_match.url_name == 'catalogo' %}item_seleccionado{% endif %}">
+            <a href="{% url 'main:catalogo' %}">Catálogo</a>
+        </li>
+    </ul>
+
+    <div class="navbar-auth">
+        {% if user.is_authenticated %}
+            <a href="{% url 'main:perfil' %}" class="btn btn-panel" style="padding:6px 12px;">👤 {{ user.username }}</a>
+            <form method="post" action="{% url 'main:logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-1" style="border:none; cursor:pointer; padding:6px 12px;">Salir</button>
+            </form>
+        {% else %}
+            <a href="{% url 'main:login' %}" class="btn btn-panel" style="padding:6px 14px; border:1px solid #333;">Iniciar sesión</a>
+            <a href="{% url 'main:registro' %}" class="btn btn-1" style="padding:6px 14px;">Registrarse</a>
+        {% endif %}
+    </div>
+
+</nav>

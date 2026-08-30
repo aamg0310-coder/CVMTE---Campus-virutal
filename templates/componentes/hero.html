@@ -1,0 +1,64 @@
+{% load static %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="bg_drk"></div>
+
+    <header class="header_hero">
+
+
+        <div class="t_hero">
+            <h1>
+                El campus donde la <span> inteligencia artificial </span> forma el talento técnico de Venezuela
+            </h1>
+            <p>
+                Diez rutas de aprendizaje por competencias — de la Ganadería Digital a la Producción Musical y la
+                Formación Petrolera — con IA como infraestructura pedagógica y micro-credenciales verificables Open
+                Badges 3.0.
+            </p>
+        </div>
+
+        <div class="btns_hero">
+
+            <a href="{% url 'main:catalogo' %}" class="btn btn-1">Explorar las 10 rutas</a>
+            <a href="{% url 'main:catalogo' %}#formacion-petrolera" class="btn btn-panel">Ver Ruta Petrolera</a>
+        </div>
+
+        <div class="count">
+            <div class="caracteristicas">
+                <span>10</span>
+                <h4>Rutas por competencias</h4>
+            </div>
+            <div class="caracteristicas">
+                <span>24</span>
+                <h4>Programas técnicos</h4>
+            </div>
+            <div class="caracteristicas">
+                <span>2</span>
+                <h4>Sedes · Carora y Barquisimet</h4>
+            </div>
+            <div class="caracteristicas">
+                <span>100%</span>
+                <h4>Credenciales verificables</h4>
+            </div>
+        </div>
+
+    </header>
+
+    <footer class="footer_hero">
+
+        <div class="content_img">
+
+            <div class="bg_img"></div>
+
+            <h4>Sede principal · Carora</h4>
+            <small>Casona colonial restaurada · Casco histórico, estado Lara</small>
+
+        </div>
+
+    </footer>
+</section>
+
+{% endblock %}
