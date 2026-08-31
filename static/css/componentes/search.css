@@ -1,37 +1,103 @@
 .search_content {
-    padding: 5vh 10vw;
+    padding: calc(var(--navbar-height) + 2.5rem) 5vw 3rem 5vw;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 18px;
     background: var(--grad-search);
+    width: 100%;
 }
 
-.search_content div { color: #fff; display: flex; flex-direction: column; gap: 4px; }
+.search_content > div {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    width: 100%;
+}
+
+.search_content h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.search_content p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+}
 
 .search_content form {
     display: flex;
     flex-direction: row;
     width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
     gap: 12px;
-    flex-wrap: wrap;
 }
 
 .search {
     flex: 1;
-    min-width: 200px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 12px;
-    padding: 10px 14px;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-pill);
+    padding: 12px 20px;
     color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
 }
-.search::placeholder { color: rgba(255,255,255,0.6); }
+
+.search:focus {
+    border-color: #ca0198;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.search::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
 
 .search_content form button {
     border: none;
     color: #fff;
     background: var(--grad-ia);
-    padding: 10px 20px;
-    border-radius: 12px;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
     cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    transition: transform 0.15s, opacity 0.15s;
 }
+
+.search_content form button:hover {
+    opacity: 0.92;
+}
+
+#search-feedback {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .search_content {
+        padding: calc(var(--navbar-height) + 1.5rem) 5vw 2rem 5vw;
+        gap: 14px;
+    }
+
+    .search_content form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search_content form button {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+}
+

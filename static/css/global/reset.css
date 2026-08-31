@@ -5,56 +5,145 @@
     list-style: none;
 }
 
-a { text-decoration: none; }
-
-a:not(.btn):not(.filter):not(.ver a) { color: inherit; }
-
-.btn {
-    padding: 10px 15px;
-    border-radius: var(--radius-pill);
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    grid-gap: 18px;
-    width: 100%;
-    max-width: 1200px;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 15vh;
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif;
     background: #f6f6f7;
     color: #111;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    width: 100%;
 }
 
-/* Detalle ruta */
-.detalle-ruta { padding: 5vh 10vw; align-items: stretch; }
-.detalle-ruta .back-link { color: var(--text-dim); }
-.detalle-card { margin-top: 20px; background: #fff; padding: 24px; border-radius: var(--radius-card); box-shadow: var(--shadow-card); }
-.detalle-card img { max-width: 420px; width: 100%; border-radius: 12px; margin-bottom: 12px; }
+img, video, iframe {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 
-/* Paginación */
-.pagination { display: flex; gap: 12px; align-items: center; margin: 20px 0; }
-.pagination a { padding: 6px 14px; background: #000; color: #fff; border-radius: 12px; }
+a {
+    text-decoration: none;
+}
+
+a:not(.btn):not(.filter):not(.ver a) {
+    color: inherit;
+}
+
+.btn {
+    padding: 9px 18px;
+    border-radius: var(--radius-pill);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:hover {
+    opacity: 0.95;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+    width: 100%;
+    padding-top: var(--navbar-height);
+}
+
+/* Detalle ruta legacy / genérico */
+.detalle-ruta {
+    padding: 2rem 5vw;
+    align-items: stretch;
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+.detalle-ruta .back-link { color: var(--text-dim); }
+.detalle-card {
+    margin-top: 20px;
+    background: #fff;
+    padding: clamp(16px, 3vw, 28px);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+}
+.detalle-card img {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+/* Paginación responsive */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 28px 0;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+}
+.pagination a {
+    padding: 8px 16px;
+    background: #111;
+    color: #fff;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    transition: background 0.2s;
+}
+.pagination a:hover {
+    background: #333;
+}
+
+.explorar {
+    color: #fff !important;
+}
 
 @media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    main { padding-top: 12vh; }
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+    }
 }
 
-.explorar{
-    color: #fff !important;
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .btn {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
 }

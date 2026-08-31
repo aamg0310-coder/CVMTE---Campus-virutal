@@ -3,15 +3,37 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 10vh;
-    background: #c7c7c7;
-    gap: 20px;
+    min-height: 70px;
+    height: auto;
+    background: #e2e2e5;
+    gap: 16px;
     width: 100%;
+    padding: 16px 5vw;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.cintillo svg {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
 }
 
 .cintillo h5 {
-    background: linear-gradient(to left, #ca0198, #8a01ca, #0191ca);
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    font-weight: 700;
+    background: var(--grad-ia);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.cintillo span {
+    background: #111;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.5px;
+}

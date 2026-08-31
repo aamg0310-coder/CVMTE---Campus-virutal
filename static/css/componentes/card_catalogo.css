@@ -1,10 +1,11 @@
 .card_catalogo {
     display: flex;
     flex-direction: column;
-    padding: 12px;
-    min-height: 420px;
+    padding: 14px;
+    min-height: 400px;
+    height: 100%;
     width: 100%;
-    max-width: 380px;
+    max-width: 100%;
     border-radius: var(--radius-card);
     background: #fff;
     border: 1px solid #e5e5e5;
@@ -14,13 +15,13 @@
 
 .card_catalogo:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
 }
 
 .card_catalogo header {
     background: var(--grad-card);
     width: 100%;
-    height: 180px;
+    height: 170px;
     border-radius: 12px;
     overflow: hidden;
     flex-shrink: 0;
@@ -36,39 +37,87 @@
 .categoria_card {
     background-color: #222;
     padding: 4px 10px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     color: #fff;
     font-size: 0.75rem;
+    font-weight: 600;
+    align-self: flex-start;
 }
 
 .content_card {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 10px 4px;
+    padding: 12px 4px 4px;
     flex: 1;
 }
 
-.titulo_card { font-size: 1.05rem; line-height: 1.3; }
-.parrafo_card { color: #555; font-size: 0.9rem; flex: 1; }
+.titulo_card {
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #111;
+}
+
+.parrafo_card {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex: 1;
+}
 
 .footer_card {
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    padding-top: 6px;
-    border-top: 1px solid #eee;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: auto;
 }
 
-.puntuacion { display: flex; align-items: center; gap: 4px; }
-.puntuacion svg { color: #b8860b; }
-.ver a { color: #4f46e5 !important; font-weight: 600; }
-.ver { display: flex; align-items: center; gap: 4px; }
-
-@media (max-width: 600px) {
-    .card_catalogo { max-width: 100%; min-height: 380px; }
+.puntuacion {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
+
+.puntuacion svg {
+    color: #f59e0b;
+}
+
+.nivel {
+    font-size: 0.8rem;
+    color: #777;
+    background: #f3f3f5;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.ver {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ver a {
+    color: #4f46e5 !important;
+    font-weight: 700;
+    font-size: 0.92rem;
+}
+
+@media (max-width: 480px) {
+    .card_catalogo {
+        padding: 12px;
+        min-height: auto;
+    }
+
+    .card_catalogo header {
+        height: 160px;
+    }
+}
+
 

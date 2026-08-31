@@ -59,25 +59,28 @@
     <section class="perfil-section">
         <h2>Todos mis cursos ({{ progresos.count }})</h2>
         {% if progresos %}
-        <table class="perfil-table">
-            <thead><tr><th>Curso</th><th>Tipo</th><th>Estado</th><th>Actualizado</th><th></th></tr></thead>
-            <tbody>
-            {% for p in progresos %}
-            <tr>
-                <td>{{ p.curso_titulo }}</td>
-                <td><small>{{ p.curso_tipo }}</small></td>
-                <td>{% if p.completado %}<span class="badge-ok">Completado</span>{% else %}<span class="badge-wip">En progreso</span>{% endif %}</td>
-                <td><small>{{ p.actualizado_en|date:"d/m H:i" }}</small></td>
-                <td>
-                    {% if p.ruta %}<a href="{% url 'main:detalle_ruta_slug' p.ruta.slug %}">Ver</a>
-                    {% else %}<a href="{% url 'main:detalle_petrolera_slug' p.programa.slug %}">Ver</a>{% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="perfil-table">
+                <thead><tr><th>Curso</th><th>Tipo</th><th>Estado</th><th>Actualizado</th><th></th></tr></thead>
+                <tbody>
+                {% for p in progresos %}
+                <tr>
+                    <td>{{ p.curso_titulo }}</td>
+                    <td><small>{{ p.curso_tipo }}</small></td>
+                    <td>{% if p.completado %}<span class="badge-ok">Completado</span>{% else %}<span class="badge-wip">En progreso</span>{% endif %}</td>
+                    <td><small>{{ p.actualizado_en|date:"d/m H:i" }}</small></td>
+                    <td>
+                        {% if p.ruta %}<a href="{% url 'main:detalle_ruta_slug' p.ruta.slug %}" class="ver-link">Ver</a>
+                        {% else %}<a href="{% url 'main:detalle_petrolera_slug' p.programa.slug %}" class="ver-link">Ver</a>{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}<p class="muted">Explora el <a href="{% url 'main:catalogo' %}">catálogo</a> y marca tu primer curso como visto.</p>{% endif %}
     </section>
+
 </main>
 {% include 'componentes/footer.html' %}
 {% endblock %}
