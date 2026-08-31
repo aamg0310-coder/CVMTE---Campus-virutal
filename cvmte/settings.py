@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,7 +35,22 @@ _allowed = os.getenv('ALLOWED_HOSTS', '')
 if _allowed:
     ALLOWED_HOSTS = [h.strip() for h in _allowed.split(',') if h.strip()]
 else:
-    ALLOWED_HOSTS = ['*'] if DEBUG else []
+    ALLOWED_HOSTS = ['*'] if DEBUG else ['.onrender.com', 'localhost', '127.0.0.1']
+
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+_csrf_trusted = os.getenv('CSRF_TRUSTED_ORIGINS', '')
+if _csrf_trusted:
+    CSRF_TRUSTED_ORIGINS = [h.strip() for h in _csrf_trusted.split(',') if h.strip()]
+else:
+    CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+
+if RENDER_EXTERNAL_HOSTNAME:
+    https_origin = f'https://{RENDER_EXTERNAL_HOSTNAME}'
+    if https_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(https_origin)
 
 
 # Application definition
@@ -84,12 +100,22 @@ WSGI_APPLICATION = 'cvmte.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
