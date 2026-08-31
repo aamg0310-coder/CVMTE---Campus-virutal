@@ -2,7 +2,7 @@ import os
 import django
 
 # Recuerda cambiar 'tu_proyecto.settings' por el nombre real del directorio donde está tu settings.py
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CVMTE.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cvmte.settings')
 django.setup()
 
 from django.contrib.auth import get_user_model
